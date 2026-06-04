@@ -1,4 +1,4 @@
-package com.payflowx.login.entity;
+package com.payflowx.auth.entity;
 
 
 import jakarta.persistence.Entity;
@@ -9,9 +9,10 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "users")
-public class Login {
+public class Auth {
 
 
+    @Id
     private String email;
 
     private String password;

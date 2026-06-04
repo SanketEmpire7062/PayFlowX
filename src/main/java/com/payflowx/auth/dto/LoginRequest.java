@@ -1,4 +1,4 @@
-package com.payflowx.login.dto;
+package com.payflowx.auth.dto;
 
 import lombok.Data;
 
