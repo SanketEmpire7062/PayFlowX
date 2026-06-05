@@ -1,6 +1,7 @@
 package com.payflowx.user.entity;
 
 
+import com.payflowx.merchant.entity.Merchant;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,6 +19,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer userId;
 
     @Column(nullable = false)
@@ -42,4 +45,7 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Merchant> merchant;
 }
