@@ -18,7 +18,7 @@ public class Merchant {
     @Id
     @Column(name = "merchant_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer merchantId;
+    private  Long merchantId;
 
     @Column(name = "merchant_name")
     private String merchantName;
@@ -41,7 +41,7 @@ public class Merchant {
     private String apiKey;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

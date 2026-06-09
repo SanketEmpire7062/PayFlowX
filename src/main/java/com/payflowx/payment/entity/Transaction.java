@@ -4,7 +4,6 @@ package com.payflowx.payment.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,21 +16,27 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transactionId;
 
+    @Column(name = "merchant_id")
+    private long merchantId;
+
     private long amount;
 
     @Column(name = "bill_number")
-    private long billNumber;
+    private long currency;
 
 
-    @Column(name = "payment_status")
-    private String paymentStatus;
+
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    private String status;
+
+
+    @Column(name = "reference_id", unique = true)
+    private long referenceId;
 
 
     @CreationTimestamp
-    @Column(name = "creation_date")
+    @Column(name = "payment_date")
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updateTime")
-    private LocalDateTime updatedAt;
 }

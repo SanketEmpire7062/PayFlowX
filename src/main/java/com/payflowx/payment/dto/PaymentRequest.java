@@ -6,5 +6,6 @@ import lombok.Data;
 public class PaymentRequest {
 
     private Long amount;
-    private long billNumber;
+    private String currency;
+    private String paymentMethod;
 }

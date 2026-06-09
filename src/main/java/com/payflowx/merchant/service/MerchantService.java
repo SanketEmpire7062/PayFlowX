@@ -41,14 +41,11 @@ public class MerchantService {
         merchant.setMerchantName(merchantRequest.getMerchantName());
         merchant.setApiKey(hashApiKey);
         merchant.setStatus(true);
+        merchant.setUser(loggedInUser);
+
 
 
         Merchant saveMerchant = merchantRepository.save(merchant);
-
-/*        MerchantResponse merchantResponse = new MerchantResponse();
-        merchantResponse.setMerchantName(saveMerchant.getMerchantName());
-        merchantResponse.setStatus(saveMerchant.getStatus());*/
-
 
         return MerchantResponse.builder()
                 .merchantName(saveMerchant.getMerchantName())
