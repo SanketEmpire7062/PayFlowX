@@ -11,9 +11,11 @@ import com.payflowx.transaction.entity.Transaction;
 import com.payflowx.transaction.enums.TransactionStatus;
 import com.payflowx.transaction.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
+@Async
 public class TransactionService {
 
     @Autowired
@@ -21,6 +23,12 @@ public class TransactionService {
 
     @Autowired
     private MerchantRepository merchantRepository;
+
+ /*   @Autowired
+    private WebhookService webhookService;*/
+
+    @Autowired
+    private TransactionProcessorService transactionProcessorService;
 
     private  TransactionStatus finalStatus;
 
@@ -43,10 +51,19 @@ public class TransactionService {
          // initiate transaction
 
          Transaction transaction = new Transaction();
+         transaction.setStatus(TransactionStatus.INITIATED);
          transaction.setMerchantId(merchant.getMerchantId());
          transaction.setAmount(transactionRequest.getAmount());
          transaction.setCurrency(transactionRequest.getCurrency());
          transaction.setPaymentMethod(transactionRequest.getPaymentMethod());
+
+         transaction.setStatus(TransactionStatus.PROCESSING);
+         transaction.setReferenceId(generateTransactionReferenceId());
+         transactionRepository.save(transaction);
+
+         transactionProcessorService.processTransaction(transaction, merchant);
+
+/*
 
          transaction.setStatus(TransactionStatus.INITIATED);
 
@@ -76,11 +93,23 @@ public class TransactionService {
          }
          else{
              finalStatus = TransactionStatus.FAILED;
+
+
          }
 
          transaction.setStatus(finalStatus);
 
-         transactionRepository.save(transaction);
+         try{
+             Thread.sleep(30_000);
+
+             transactionRepository.save(transaction);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+*/
+
+
+        // webhookService.sendWebhook(transaction, merchant);
 
 
          return TransactionResponse.builder()
