@@ -1,6 +1,6 @@
-package com.payflowx.payment.enums;
+package com.payflowx.transaction.enums;
 
-public enum PaymentStatus {
+public enum TransactionStatus {
 
     INITIATED,
 

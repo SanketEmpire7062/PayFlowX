@@ -1,6 +1,7 @@
-package com.payflowx.payment.entity;
+package com.payflowx.transaction.entity;
 
 
+import com.payflowx.transaction.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,18 +23,19 @@ public class Transaction {
     private long amount;
 
     @Column(name = "bill_number")
-    private long currency;
+    private String currency;
 
 
 
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
 
 
     @Column(name = "reference_id", unique = true)
-    private long referenceId;
+    private String referenceId;
 
 
     @CreationTimestamp

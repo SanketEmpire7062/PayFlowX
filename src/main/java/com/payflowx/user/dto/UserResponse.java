@@ -1,15 +1,19 @@
 package com.payflowx.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class UserResponse {
 
 
-    private Integer userId;
-    private String name;
-    private String email;
+    public Long userId;
+    public String name;
+    public String email;
+    public String message;
 
 
 

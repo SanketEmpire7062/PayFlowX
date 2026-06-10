@@ -1,9 +1,9 @@
-package com.payflowx.payment.dto;
+package com.payflowx.transaction.dto;
 
 import lombok.Data;
 
 @Data
-public class PaymentRequest {
+public class TransactionRequest {
 
     private Long amount;
     private String currency;

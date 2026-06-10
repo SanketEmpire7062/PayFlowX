@@ -1,6 +1,7 @@
 package com.payflowx.merchant.service;
 
 import com.payflowx.auth.dto.LoginResponse;
+import com.payflowx.common.exception.BadRequestException;
 import com.payflowx.merchant.dto.MerchantRequest;
 import com.payflowx.merchant.dto.MerchantResponse;
 import com.payflowx.merchant.entity.Merchant;
@@ -31,7 +32,7 @@ public class MerchantService {
 
         User loggedInUser = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                        new BadRequestException("user account not exist"));
 
         String rawApiKey = ApiKeyGenerator.generateKey();
 
