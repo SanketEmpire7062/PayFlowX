@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-@Async
 public class TransactionService {
 
     @Autowired
@@ -43,10 +42,6 @@ public class TransactionService {
                  .orElseThrow(()->
                          new BadRequestException("Invalid api key"));
 
-     /*    // validate amount
-         if(transactionRequest.getAmount() <= 0){
-             throw new BadRequestException("amount must be greater than 0");
-         }*/
 
          // initiate transaction
 
@@ -63,53 +58,6 @@ public class TransactionService {
 
          transactionProcessorService.processTransaction(transaction, merchant);
 
-/*
-
-         transaction.setStatus(TransactionStatus.INITIATED);
-
-         transaction.setReferenceId(generateTransactionReferenceId());
-
-         transactionRepository.save(transaction);
-
-         if (transactionRequest.getAmount() <= 0) {
-             transaction.setStatus(TransactionStatus.FAILED);
-             transactionRepository.save(transaction);
-
-             return TransactionResponse.builder()
-                     .referenceId(transaction.getReferenceId())
-                     .status(transaction.getStatus())
-                     .build();
-         }
-
-
-         // stimulate processing started
-         transaction.setStatus(TransactionStatus.PROCESSING);
-
-         transactionRepository.save(transaction);
-
-         if(transactionRequest.getAmount() > 0){
-
-             finalStatus = TransactionStatus.SUCCESS;
-         }
-         else{
-             finalStatus = TransactionStatus.FAILED;
-
-
-         }
-
-         transaction.setStatus(finalStatus);
-
-         try{
-             Thread.sleep(30_000);
-
-             transactionRepository.save(transaction);
-         }catch (Exception e){
-             e.printStackTrace();
-         }
-*/
-
-
-        // webhookService.sendWebhook(transaction, merchant);
 
 
          return TransactionResponse.builder()
@@ -121,6 +69,25 @@ public class TransactionService {
      public String generateTransactionReferenceId(){
          return "TXN" + System.currentTimeMillis();
      }
+
+
+     public TransactionResponse getTransactionDetails(String referenceId){
+
+         Transaction transaction = transactionRepository
+                 .findByReferenceId(referenceId)
+                 .orElseThrow(() ->
+                         new BadRequestException("Transaction not found"));
+
+         return TransactionResponse.builder()
+                 .transactionId(transaction.getTransactionId())
+                 .referenceId(transaction.getReferenceId())
+                 .status(transaction.getStatus())
+                 .build();
+
+
+     }
+
+
 
 
 }

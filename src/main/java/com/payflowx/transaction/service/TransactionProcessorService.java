@@ -13,9 +13,11 @@ public class TransactionProcessorService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-   /* @Autowired
-    private WebhookService webhookService;
-*/
+  /*  @Autowired
+    private WebhookService webhookService;*/
+
+
+   // @Async
     public  void processTransaction(Transaction transaction, Merchant merchant){
         try{
 
@@ -29,7 +31,7 @@ public class TransactionProcessorService {
             transaction.setStatus(finalStatus);
             transactionRepository.save(transaction);
 
-         //   webhookService.sendWebhook(transaction, merchant);
+      //      webhookService.sendWebhook(transaction, merchant);
 
         }catch (Exception e){
             e.printStackTrace();

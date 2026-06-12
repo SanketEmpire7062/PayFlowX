@@ -27,5 +27,16 @@ public class TransactionController {
         );
 
 
+
+
+        }
+
+
+    @GetMapping("/{referenceId}")
+    ResponseEntity<TransactionResponse> getPaymentDetails(@PathVariable String referenceId){
+
+        return  ResponseEntity.ok(transactionService.getTransactionDetails(referenceId));
+
+
     }
 }
