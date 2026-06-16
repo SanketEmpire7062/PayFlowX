@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthService {
 
@@ -42,7 +44,7 @@ public class AuthService {
         }
 
 
-        String token = jwtService.generateToken(loginRequest.getEmail());
+        String token = jwtService.generateToken(loginRequest.getEmail(), user.getRole());
 
         System.out.println("generated token is ::" + token);
 
@@ -53,5 +55,7 @@ public class AuthService {
                 .build();
 
     }
+
+
 
 }

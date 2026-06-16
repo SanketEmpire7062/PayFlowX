@@ -2,6 +2,7 @@ package com.payflowx.user.entity;
 
 
 import com.payflowx.merchant.entity.Merchant;
+import com.payflowx.user.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -33,8 +34,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-
-    private String role = "user";
+    private String role = "ADMIN";
 
     private Boolean status = true;
 
