@@ -5,6 +5,7 @@ import com.payflowx.transaction.dto.TransactionRequest;
 import com.payflowx.transaction.dto.TransactionResponse;
 import com.payflowx.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,14 @@ public class TransactionController {
             @RequestHeader("X-API-KEY") String apiKey,
             @RequestBody TransactionRequest transactionRequest){
 
+        return new ResponseEntity<>(transactionService.initiateTransaction(transactionRequest, apiKey), HttpStatus.CREATED);
 
-        return ResponseEntity.ok(
+
+      /*  return ResponseEntity.ok(
                 transactionService.initiateTransaction(
                         transactionRequest,
                         apiKey)
-        );
+        );*/
 
 
 

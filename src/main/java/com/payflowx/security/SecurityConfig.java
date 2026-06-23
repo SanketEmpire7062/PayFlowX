@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/refund/**").permitAll()
                         .requestMatchers("/user/create").permitAll()
                         .requestMatchers("/payment/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
