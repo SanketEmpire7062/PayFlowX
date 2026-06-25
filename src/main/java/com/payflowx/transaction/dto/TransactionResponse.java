@@ -13,4 +13,6 @@ public class TransactionResponse {
     private TransactionStatus status;
 
     private  String referenceId;
+
+    private long amount;
 }

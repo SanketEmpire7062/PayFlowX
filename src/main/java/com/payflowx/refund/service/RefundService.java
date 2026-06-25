@@ -31,6 +31,10 @@ public class RefundService {
             throw new InvalidAmountException("Refund amount is exceeds original transaction amount");
         }
 
+        if(refundRequest.getAmount() <= 0){
+            throw new InvalidAmountException("Refund amount must be greater than 0");
+        }
+
         Refund refund = new Refund();
         refund.setTransaction(transaction);
         refund.setAmount(refundRequest.getAmount());

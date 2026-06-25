@@ -2,6 +2,7 @@ package com.payflowx.transaction.service;
 
 
 import com.payflowx.common.exception.BadRequestException;
+import com.payflowx.common.exception.InvalidAmountException;
 import com.payflowx.merchant.entity.Merchant;
 import com.payflowx.merchant.repository.MerchantRepository;
 import com.payflowx.merchant.util.HashUtil;
@@ -42,12 +43,18 @@ public class TransactionService {
                  .orElseThrow(()->
                          new BadRequestException("Invalid api key"));
 
+         if(transactionRequest.getAmount() <= 0){
+             throw new InvalidAmountException("transaction amount must not be 0");
+         }
+
 
          // initiate transaction
 
          Transaction transaction = new Transaction();
          transaction.setStatus(TransactionStatus.INITIATED);
          transaction.setMerchantId(merchant.getMerchantId());
+
+
          transaction.setAmount(transactionRequest.getAmount());
          transaction.setCurrency(transactionRequest.getCurrency());
          transaction.setPaymentMethod(transactionRequest.getPaymentMethod());
@@ -62,7 +69,10 @@ public class TransactionService {
 
          return TransactionResponse.builder()
                  .referenceId(transaction.getReferenceId())
+                 .transactionId(transaction.getTransactionId())
+                 .amount(transaction.getAmount())
                  .status(transaction.getStatus())
+
                  .build();
      }
 

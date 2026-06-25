@@ -1,5 +1,6 @@
 package com.payflowx.common.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,7 +34,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 
-
     }
 
     @ExceptionHandler(InvalidAmountException.class)
@@ -45,6 +45,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Map<String, Object>> jwtTokenExpired(ExpiredJwtException ex){
+        Map<String, Object> body = new HashMap<>();
+        body.put("timeStamp", LocalDateTime.now());
+        body.put("status", HttpStatus.UNAUTHORIZED.value());
+        body.put("error", "Unauthorized");
+        body.put("message", "Your token has expired.");
+
+        return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
 
     }
 }
