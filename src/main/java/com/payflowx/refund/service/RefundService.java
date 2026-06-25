@@ -1,8 +1,6 @@
 package com.payflowx.refund.service;
 
-import com.payflowx.common.exception.InvalidRefundException;
-import com.payflowx.common.exception.RefundProcessingException;
-import com.payflowx.common.exception.ResourceNotFoundException;
+import com.payflowx.common.exception.*;
 import com.payflowx.refund.dto.RefundRequest;
 import com.payflowx.refund.dto.RefundResponse;
 import com.payflowx.refund.entity.Refund;
@@ -25,12 +23,12 @@ public class RefundService {
     public RefundResponse refundTransaction(RefundRequest refundRequest){
 
         Transaction transaction = transactionRepository.findById(refundRequest.getTransactionId())
-                .orElseThrow(() -> new ResourceNotFoundException("Transaction not exists"));
+                .orElseThrow(() -> new UserNotFoundException("Transaction not found with ID: " + refundRequest.getTransactionId()));
 
 
 
         if(refundRequest.getAmount() > transaction.getAmount()){
-            throw new InvalidRefundException("Refund amount is exceeds original transaction amount");
+            throw new InvalidAmountException("Refund amount is exceeds original transaction amount");
         }
 
         Refund refund = new Refund();

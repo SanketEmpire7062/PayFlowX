@@ -35,7 +35,7 @@ public class AuthService {
                                 "User not found with email: " + loginRequest.getEmail()));
 
         if(!bCryptPasswordDecoder.matches(loginRequest.getPassword(), user.getPassword())){
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid password");
         }
 
 
